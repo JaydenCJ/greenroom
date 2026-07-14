@@ -1,0 +1,11 @@
+{
+  "id": 3141592653,
+  "node_id": "IC_kwDOLZzZzc5uJ3xN",
+  "url": "https://api.github.com/repos/acme/demo-app/issues/comments/3141592653",
+  "html_url": "https://github.com/acme/demo-app/pull/42#issuecomment-3141592653",
+  "issue_url": "https://api.github.com/repos/acme/demo-app/issues/42",
+  "user": { "login": "greenroom[bot]", "id": 190000001, "type": "Bot" },
+  "created_at": "2026-07-08T09:13:02Z",
+  "updated_at": "2026-07-08T09:13:02Z",
+  "body": "<!-- greenroom:gr-acme-demo-app-42 -->\n### Greenroom preview"
+}

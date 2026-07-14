@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="296" viewBox="0 0 980 296" role="img" aria-label="greenroom demo terminal output">
+  <rect width="980" height="296" rx="10" fill="#0d1117"/>
+  <rect width="980" height="34" rx="10" fill="#161b22"/>
+  <rect y="24" width="980" height="10" fill="#161b22"/>
+  <circle cx="22" cy="17" r="6" fill="#ff5f57"/>
+  <circle cx="42" cy="17" r="6" fill="#febc2e"/>
+  <circle cx="62" cy="17" r="6" fill="#28c840"/>
+  <text x="490" y="21" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" text-anchor="middle">greenroom — a preview environment for every pull request</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">
+    <text x="20" y="56" fill="#7ee787">$ GREENROOM_DRY_RUN=1 GITHUB_WEBHOOK_SECRET=demo-secret BASE_DOMAIN=preview.example.com npm start</text>
+    <text x="20" y="78" fill="#c9d1d9">2026-07-08T07:14:50.336Z INFO  greenroom v0.1.0 starting</text>
+    <text x="20" y="100" fill="#c9d1d9">2026-07-08T07:14:50.337Z INFO  mode: dry-run (git and docker commands are logged, not executed)</text>
+    <text x="20" y="122" fill="#c9d1d9">2026-07-08T07:14:50.453Z INFO  listening on http://127.0.0.1:8811</text>
+    <text x="20" y="166" fill="#7ee787">$ bash scripts/send-sample-webhook.sh   # signed pull_request "opened" webhook</text>
+    <text x="20" y="188" fill="#c9d1d9">2026-07-08T07:14:51.847Z INFO  deploying gr-acme-demo-app-42 for acme/demo-app#42 @ a1b2c3d</text>
+    <text x="20" y="210" fill="#c9d1d9">2026-07-08T07:14:51.847Z INFO  [dry-run] git fetch --depth 50 origin pull/42/head</text>
+    <text x="20" y="232" fill="#c9d1d9">2026-07-08T07:14:51.847Z INFO  [dry-run] docker compose -p gr-acme-demo-app-42 -f docker-compose.yml up -d --build ...</text>
+    <text x="20" y="254" fill="#79c0ff" font-weight="bold">2026-07-08T07:14:51.848Z INFO  environment gr-acme-demo-app-42 running at https://42-acme-demo-app.preview.example.com</text>
+  </g>
+</svg>

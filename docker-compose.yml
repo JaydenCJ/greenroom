@@ -1,0 +1,88 @@
+# Deploys greenroom itself plus a Caddy reverse proxy for preview domains.
+# Copy .env.example to .env and set at least GITHUB_WEBHOOK_SECRET and
+# BASE_DOMAIN before running `docker compose up -d`.
+#
+# Topology: Caddy runs with host networking, so it binds 80/443 on the host
+# and reaches both greenroom (published on 127.0.0.1:8811) and the preview
+# ports (published on 127.0.0.1 by default) over loopback. Nothing but Caddy
+# faces the network. Host networking requires Docker Engine on Linux.
+services:
+  greenroom:
+    build: .
+    image: greenroom:0.1.0
+    restart: unless-stopped
+    environment:
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET:?set GITHUB_WEBHOOK_SECRET in .env}
+      BASE_DOMAIN: ${BASE_DOMAIN:?set BASE_DOMAIN in .env}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      # Inside the container greenroom must listen on all interfaces so the
+      # published port works; the host port below is 127.0.0.1-only.
+      GREENROOM_HOST: 0.0.0.0
+      GREENROOM_PORT: "8811"
+      TTL_HOURS: ${TTL_HOURS:-72}
+      REAPER_INTERVAL_MINUTES: ${REAPER_INTERVAL_MINUTES:-10}
+      PORT_RANGE: ${PORT_RANGE:-20000-20100}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-preview}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+      ALLOWED_REPOS: ${ALLOWED_REPOS:-}
+      COMPOSE_FILE: ${COMPOSE_FILE:-docker-compose.yml}
+      # Caddy shares the host network namespace, so previews stay published
+      # on 127.0.0.1 (safe default) and Caddy proxies to them over loopback.
+      PROXY_UPSTREAM_HOST: ${PROXY_UPSTREAM_HOST:-127.0.0.1}
+      PREVIEW_BIND_HOST: ${PREVIEW_BIND_HOST:-127.0.0.1}
+      # Run after every snippet change so Caddy picks up new/removed preview
+      # sites. Works because the docker socket is mounted below.
+      CADDY_RELOAD_CMD: ${CADDY_RELOAD_CMD:-docker exec greenroom-caddy caddy reload --config /etc/caddy/Caddyfile}
+      DATA_DIR: /data
+      CADDY_DIR: /caddy
+      # WORK_DIR is bind-mounted at the same path inside and outside the
+      # container (see volumes), so relative bind mounts in target compose
+      # files resolve to the same files for the host Docker daemon.
+      WORK_DIR: /var/lib/greenroom/work
+    ports:
+      - "127.0.0.1:8811:8811"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - greenroom-data:/data
+      - greenroom-caddy:/caddy
+      - /var/lib/greenroom/work:/var/lib/greenroom/work
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:8811/health').then(r=>process.exit(r.status===200?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  caddy:
+    image: caddy:2.10.0-alpine
+    container_name: greenroom-caddy
+    restart: unless-stopped
+    # Host networking: Caddy binds 80/443 directly and reaches the
+    # loopback-published greenroom and preview ports on 127.0.0.1.
+    network_mode: host
+    environment:
+      ACME_EMAIL: ${ACME_EMAIL:-}
+      GREENROOM_PUBLIC_HOST: ${GREENROOM_PUBLIC_HOST:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - greenroom-caddy:/etc/caddy/greenroom:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    healthcheck:
+      test: ["CMD", "caddy", "version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      greenroom:
+        condition: service_healthy
+
+volumes:
+  greenroom-data:
+  greenroom-caddy:
+  caddy-data:
+  caddy-config:

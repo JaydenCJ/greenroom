@@ -1,0 +1,13 @@
+{
+  "url": "https://api.github.com/repos/acme/demo-app/pulls/42",
+  "id": 2041300042,
+  "number": 42,
+  "state": "closed",
+  "locked": false,
+  "title": "Add checkout flow",
+  "merged": true,
+  "merged_at": "2026-07-08T15:40:02Z",
+  "user": { "login": "octocat", "id": 583231, "type": "User" },
+  "head": { "ref": "feature/checkout", "sha": "b2c3d4e5f60718293a4b5c6d7e8f90123456789a" },
+  "base": { "ref": "main", "sha": "0f1e2d3c4b5a69788796a5b4c3d2e1f009876543" }
+}

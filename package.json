@@ -1,0 +1,42 @@
+{
+  "name": "greenroom",
+  "version": "0.1.0",
+  "description": "Self-hosted preview environments for every pull request: one GitHub webhook, one docker compose project per PR, one subdomain, automatic teardown.",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "start": "node dist/src/index.js",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "typescript": "5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaydenCJ/greenroom.git"
+  },
+  "homepage": "https://github.com/JaydenCJ/greenroom#readme",
+  "bugs": {
+    "url": "https://github.com/JaydenCJ/greenroom/issues"
+  },
+  "keywords": [
+    "preview-environments",
+    "pull-request",
+    "github-webhook",
+    "docker-compose",
+    "self-hosted",
+    "deployment",
+    "ephemeral-environments",
+    "caddy"
+  ]
+}

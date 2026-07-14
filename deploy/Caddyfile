@@ -1,0 +1,19 @@
+# Caddyfile for the greenroom docker compose deployment.
+# Values in {$...} come from the environment (see .env.example).
+
+{
+	email {$ACME_EMAIL}
+}
+
+# Greenroom itself. GitHub delivers webhooks to
+# https://<GREENROOM_PUBLIC_HOST>/webhook through this site. Caddy runs with
+# host networking, so greenroom's 127.0.0.1-published port is reachable.
+{$GREENROOM_PUBLIC_HOST:localhost} {
+	reverse_proxy 127.0.0.1:8811
+}
+
+# Per-PR preview sites written by greenroom (one file per environment).
+# Greenroom triggers `caddy reload` after every change (CADDY_RELOAD_CMD).
+# Caddy issues a certificate per preview host on demand, so a wildcard DNS
+# record (*.BASE_DOMAIN -> this server) is all you need.
+import /etc/caddy/greenroom/*.caddy

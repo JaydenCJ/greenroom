@@ -1,0 +1,47 @@
+{
+  "action": "synchronize",
+  "number": 42,
+  "before": "a1b2c3d4e5f60718293a4b5c6d7e8f9012345678",
+  "after": "b2c3d4e5f60718293a4b5c6d7e8f90123456789a",
+  "pull_request": {
+    "url": "https://api.github.com/repos/acme/demo-app/pulls/42",
+    "html_url": "https://github.com/acme/demo-app/pull/42",
+    "id": 2041300042,
+    "number": 42,
+    "state": "open",
+    "locked": false,
+    "title": "Add checkout flow",
+    "draft": false,
+    "merged": false,
+    "user": { "login": "octocat", "id": 583231, "type": "User" },
+    "created_at": "2026-07-08T09:12:44Z",
+    "updated_at": "2026-07-08T11:03:19Z",
+    "head": {
+      "label": "acme:feature/checkout",
+      "ref": "feature/checkout",
+      "sha": "b2c3d4e5f60718293a4b5c6d7e8f90123456789a",
+      "repo": {
+        "id": 901234567,
+        "name": "demo-app",
+        "full_name": "acme/demo-app"
+      }
+    },
+    "base": {
+      "label": "acme:main",
+      "ref": "main",
+      "sha": "0f1e2d3c4b5a69788796a5b4c3d2e1f009876543"
+    }
+  },
+  "repository": {
+    "id": 901234567,
+    "name": "demo-app",
+    "full_name": "acme/demo-app",
+    "private": true,
+    "owner": { "login": "acme", "id": 44112233, "type": "Organization" },
+    "html_url": "https://github.com/acme/demo-app",
+    "clone_url": "https://github.com/acme/demo-app.git",
+    "default_branch": "main"
+  },
+  "sender": { "login": "octocat", "id": 583231, "type": "User" },
+  "installation": { "id": 77665544 }
+}

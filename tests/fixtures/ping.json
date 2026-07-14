@@ -1,0 +1,12 @@
+{
+  "zen": "Keep it logically awesome.",
+  "hook_id": 512345678,
+  "hook": {
+    "type": "App",
+    "id": 512345678,
+    "events": ["pull_request"],
+    "active": true,
+    "config": { "content_type": "json", "insecure_ssl": "0", "url": "https://greenroom.example.com/webhook" }
+  },
+  "app_id": 998877
+}

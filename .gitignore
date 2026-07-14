@@ -1,0 +1,34 @@
+# --- dependencies ---
+node_modules/
+
+# --- build outputs ---
+build/
+dist/
+out/
+
+# --- model weights & large artifacts (never commit) ---
+models/
+*.gguf
+*.onnx
+*.safetensors
+
+# --- env & secrets ---
+.env
+.env.*
+!.env.example
+
+# --- runtime data (created by a running greenroom instance) ---
+# Anchored to the project root on purpose: an unanchored `caddy/` would also
+# ignore src/caddy/, which is real source code.
+/data/
+/caddy/
+/work/
+
+# --- caches / editor / OS ---
+.DS_Store
+.idea/
+.vscode/
+.cache/
+coverage/
+*.log
+tmp/
